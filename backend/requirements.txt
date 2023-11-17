@@ -1,0 +1,5 @@
+Flask==2.0.1
+mysql-connector-python==8.0.23
+redis==3.5.3
+Werkzeug==2.2.2
+# Agregar otras dependencias aca si las necesitamos

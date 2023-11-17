@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      MYSQL_HOST: mysql
+    volumes:
+      - './backend:/app'
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: BD1_Final
+    volumes:
+      # ./SoloTablasv1.sql:/docker-entrypoint-initdb.d/SoloTablasv1.sql
+      - mysql-data:/var/lib/mysql
+      
+
+  redis:
+    image: redis:latest
+
+volumes:
+  mysql-data:
+
