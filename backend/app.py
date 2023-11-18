@@ -15,9 +15,11 @@ def connect_to_mysql():
                 database="BD1_Final"
             )
             if connection.is_connected():
+                print("conectado!!")
                 return connection
+
         except mysql.connector.Error as err:
-            print("Error connecting to MySQL:", err)
+            print("No se puede conectar a MySQL:", err)
             time.sleep(5)  # Espera de 5 segundos entre cada intento
     raise Exception("Failed to connect to MySQL after several attempts")
 
