@@ -1,38 +1,33 @@
-import database
+import helpers.database
 
-def register(data):
-    return
+def register_user(data):
+    try:
+        validate(data)
+        return data
+    except Exception as error:
+        return str(error)
 
 def validate(data):
-    if data.ci:
-        print('ci')
-    else:
-        return         
-    if data.nombre:
-        print('nombre')
-    else:
-        return  
-    if data.apellido:
-        print('apellido')
-    else:
-        return
-    if data.fecha_de_nacimiento:
-        print('fecha de nacimiento')
-    else:
-        return  
-    if data.domicilio:
-        print('domicilio')
-    else:
-        return 
-    if data.email:
-        print('email')
-    else:
-        return
-    if data.telefono:
-        print('telefono')
-    else:
-        return
-    if data.password:
-        print('password')
-    else:
-        return
+    if not(data["ci"]) or data["ci"] == "":
+        raise Exception("Cedula requerida")
+
+    if not(data["nombre"]) or data["nombre"] == "":
+        raise Exception("Nombre requerido")
+
+    if not(data["apellido"]) or data["apellido"] == "":
+        raise Exception("Apellido requerido")
+
+    if not(data["fecha_de_nacimiento"]) or data["fecha_de_nacimiento"] == "":
+        raise Exception("Fecha de nacimiento requerido")
+
+    if not(data["domicilio"]) or data["domicilio"] == "":
+        raise Exception("Domicilio requerido")
+
+    if not(data["email"]) or data["email"] == "":
+        raise Exception("Email requerido")
+
+    if not(data["telefono"]) or data["telefono"] == "":
+        raise Exception("Telefono requerido")
+
+    if not(data["password"]) or data["password"] == "":
+       raise Exception("Password requerido")
