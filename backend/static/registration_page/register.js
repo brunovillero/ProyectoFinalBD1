@@ -25,39 +25,44 @@ function validar(){
     let telefono = document.getElementById("telefono")
     let password = document.getElementById("password")
 
-    if(ci.value != ""){
+    if(isValid(ci.value)){
         data.ci = ci.value
     }
     
-    if(nombre.value != ""){
+    if(isValid(nombre.value)){
         data.nombre = nombre.value
     }
 
-    if(apellido.value != ""){
+    if(isValid(apellido.value)){
         data.apellido = apellido.value
     }
 
-    if(fecha_de_nacimiento.value != ""){
+    if(isValid(fecha_de_nacimiento.value)){
         data.fecha_de_nacimiento = fecha_de_nacimiento.value
     }
 
-    if(domicilio.value != ""){
+    if(isValid(domicilio.value)){
         data.domicilio = domicilio.value
     }
 
-    if(email.value != ""){
+    if(isValid(email.value)){
         data.email = email.value
     }
 
-    if(telefono.value != ""){
+    if(isValid(telefono.value)){
         data.telefono = telefono.value
     }
 
-    if(password.value != ""){
+    if(isValid(password.value)){
         data.password = password.value
     }
 
     console.log(data)
 
     ingresar(data)
+}
+
+function isValid(str) {
+    //removemos espacios a los extremos y chequeamos que no exista ninguno en el medio
+    return str.trim().length > 0 && !str.includes(" ");
 }
