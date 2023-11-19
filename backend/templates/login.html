@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <script src="{{url_for('static', filename='login_page/login.js')}}"></script>
+</head>
+<body>
+    <div class="container">
+        <form class="login-form">
+            <label for="identificador">Identificador</label>
+            <input type="text" id="identificador" name="identificador"/>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password"/>
+            
+            <input type="button" value="ingresar"/>
+        </form>
+        <div class="register-section">
+            En caso de no tener cuenta clickea <a href="/register">este link</a> para darse de alta como funcionario.
+        </div>
+    </div>
+</body>
+</html>
