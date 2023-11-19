@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import mysql.connector
 import redis
 import time
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 def connect_to_mysql():
     for _ in range(24):  # 24 intentos
@@ -31,8 +31,12 @@ mysql_connection = connect_to_mysql()
 redis_connection = redis.StrictRedis(host="redis", port=6379, db=0)
 
 @app.route('/')
-def hello():
-    return jsonify(message="Welcome!!!")
+def login():
+    return render_template('./login_page/login.html')
+
+@app.route('/register')
+def register():
+    return render_template('./registration_page/register.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
