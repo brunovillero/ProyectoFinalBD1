@@ -1,13 +1,22 @@
-import helpers.database
+from helpers.database import mysql_connection
+import argon2
 
 def register_user(data):
     try:
         validate(data)
-        return data
+        insert_func(data)
+        return "Funcionario registrado correctamente"
     except Exception as error:
         return str(error)
 
 def validate(data):
+
+    if not(data["logid"]) or data["logid"] == "":
+       raise Exception("Usuario requerido")
+
+    if not(data["password"]) or data["password"] == "":
+       raise Exception("Password requerido")
+    
     if not(data["ci"]) or data["ci"] == "":
         raise Exception("Cedula requerida")
 
@@ -29,5 +38,27 @@ def validate(data):
     if not(data["telefono"]) or data["telefono"] == "":
         raise Exception("Telefono requerido")
 
-    if not(data["password"]) or data["password"] == "":
-       raise Exception("Password requerido")
+## Queda completar la insercion del funcionario y luego el login
+def insert_func(data):
+    ph = argon2.PasswordHasher()
+    data["password"] = ph.hash(data["password"])
+
+    insert_login = ("INSERT INTO Logins "
+              "(LogId, Password) "
+              "VALUES (%(logid)s, %(password)s)")
+    
+    insert_func = ("INSERT INTO Funcionarios "
+              "(Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email, LogId) "
+              "VALUES (%(ci)s, %(nombre)s, %(apellido)s, %(fecha_de_nacimiento)s, %(domicilio)s, %(telefono)s, %(email)s, %(logid)s)")
+    print(insert_login, insert_func)
+
+    try:
+        mysql = mysql_connection()
+        mysql_cursor = mysql.cursor()
+        mysql_cursor.execute(insert_login, data)
+        mysql_cursor.execute(insert_func, data)
+        mysql.commit()
+        mysql_cursor.close()
+        mysql.close()
+    except Exception as error:
+        raise Exception("No se pudo registrar usuario, puede que la cedula o el usuario ya esten registrados.")
