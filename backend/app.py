@@ -1,11 +1,18 @@
 from flask import Flask, render_template, request, jsonify
 from helpers.registration_controller import register_user
+from helpers.login_controller import login_func
 
 app = Flask(__name__, template_folder='templates')
 
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET'])
 def login():
-    return render_template('./login.html')
+    if request.method == 'GET':
+        return render_template('./login.html')
+    if request.method == 'POST':
+        content_type = request.headers.get('Content-Type')
+        if (content_type == 'application/json'):
+            return jsonify(login_func(request.json))
+    return jsonify("Tipo de solicitud invalida")
 
 @app.route('/register', methods = ['POST', 'GET'])
 def register():

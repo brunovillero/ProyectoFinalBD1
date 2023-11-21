@@ -38,7 +38,6 @@ def validate(data):
     if not(data["telefono"]) or data["telefono"] == "":
         raise Exception("Telefono requerido")
 
-## Queda completar la insercion del funcionario y luego el login
 def insert_func(data):
     ph = argon2.PasswordHasher()
     data["password"] = ph.hash(data["password"])
@@ -50,7 +49,6 @@ def insert_func(data):
     insert_func = ("INSERT INTO Funcionarios "
               "(Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email, LogId) "
               "VALUES (%(ci)s, %(nombre)s, %(apellido)s, %(fecha_de_nacimiento)s, %(domicilio)s, %(telefono)s, %(email)s, %(logid)s)")
-    print(insert_login, insert_func)
 
     try:
         mysql = mysql_connection()

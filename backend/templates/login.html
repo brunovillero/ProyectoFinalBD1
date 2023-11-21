@@ -9,13 +9,13 @@
 <body>
     <div class="container">
         <form class="login-form">
-            <label for="identificador">Identificador</label>
-            <input type="text" id="identificador" name="identificador"/>
+            <label for="logid">Usuario</label>
+            <input type="text" id="logid" name="logid"/>
 
             <label for="password">Contraseña</label>
             <input type="password" id="password" name="password"/>
             
-            <input type="button" value="ingresar"/>
+            <input type="button" id="ingresar" value="ingresar" onclick="validar()"/>
         </form>
         <div class="register-section">
             En caso de no tener cuenta clickea <a href="/register">este link</a> para darse de alta como funcionario.
