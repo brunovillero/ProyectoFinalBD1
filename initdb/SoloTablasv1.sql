@@ -37,3 +37,12 @@ CREATE TABLE Periodos_Actualizacion (
     Fch_Fin DATE NOT NULL
 );
 
+<<<<<<< Updated upstream:initdb/SoloTablasv1.sql
+=======
+SELECT F.*
+FROM Funcionarios F
+LEFT JOIN Carnet_Salud CS ON F.Ci = CS.Ci
+LEFT JOIN Agenda A ON F.Ci = A.Ci
+WHERE CS.Comprobante IS NULL
+   AND (A.Nro IS NULL OR A.Fch_Agenda < CURRENT_TIMESTAMP);
+>>>>>>> Stashed changes:SoloTablasv1.sql
