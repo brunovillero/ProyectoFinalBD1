@@ -10,7 +10,11 @@ function ingresar(data){
     })
         .then((res) => res.json())
         .catch((error) => console.error("Error:", error))
-        .then((response) => console.log("Success:", response))
+        .then((response) => {
+            //guardamos el hash creado para la session
+            sessionStorage.setItem("auth", response.auth)
+            //redirigimos al dashboard
+        })
 }
 
 function validar(){

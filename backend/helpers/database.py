@@ -16,5 +16,5 @@ def mysql_connection():
         print("No se puede conectar a MySQL:", err)
 
 def redis_connection():
-    redis_connection = redis.StrictRedis(host="redis", port=6379, db=0)
+    redis_connection = redis.StrictRedis(host="redis", port=6379, decode_responses=True)
     return redis_connection

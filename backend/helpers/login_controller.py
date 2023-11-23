@@ -1,11 +1,11 @@
 from helpers.database import mysql_connection
+from helpers.database import redis_connection
 import argon2
 
 def login_func(data):
     try:
         validate(data)
-        login(data)
-        return "Funcionario verificado correctamente"
+        return login(data)
     except Exception as error:
         return str(error)
 
@@ -26,8 +26,18 @@ def login(data):
     mysql_cursor = mysql.cursor()
     mysql_cursor.execute(select_login, data)
     myresult = mysql_cursor.fetchone()
-    mysql_cursor.close()
-    mysql.close()
     
-    if(not ph.verify(myresult[1], data["password"])):
+    
+    if(ph.verify(myresult[1], data["password"])):
+        
+        #Creamos un nuevo hash en cache para la session
+        #El cual se va a utilizar en el front para validar las solicitudes en el backend
+        session_hash = ph.hash(data["password"])
+        redis_service = redis_connection()
+        redis_service.set(session_hash, data["logid"])
+        
+        return {"auth": session_hash}
+    else:
+        mysql_cursor.close()
+        mysql.close()
         raise Exception("Credenciales invalidas, intente nuevamente")
