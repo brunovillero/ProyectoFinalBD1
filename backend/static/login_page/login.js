@@ -26,9 +26,7 @@ function validar(){
     if(esValido(password.value)){
         data.password = password.value
     }
-
     console.log(data)
-
     ingresar(data)
 }
 

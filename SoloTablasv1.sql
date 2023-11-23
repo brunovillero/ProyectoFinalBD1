@@ -10,7 +10,7 @@ CREATE TABLE Funcionarios (
     Fch_Nacimiento DATE NOT NULL,
     Direccion VARCHAR(255) NOT NULL,
     Telefono VARCHAR(20) NOT NULL,
-    Email VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL UNIQUE,
     LogId VARCHAR(255) NOT NULL,
     FOREIGN KEY (LogId) REFERENCES Logins(LogId)
 );
@@ -27,12 +27,12 @@ CREATE TABLE Carnet_Salud (
     Fch_Emision DATETIME NOT NULL,
     Fch_Vencimiento DATETIME,
     Comprobante MEDIUMBLOB NOT NULL,
+    PRIMARY KEY (Ci)
     FOREIGN KEY (Ci) REFERENCES Funcionarios(Ci),
-    PRIMARY KEY (Ci,Fch_Vencimiento)
 );
 
 CREATE TABLE Periodos_Actualizacion (
-    Ano INT NOT NULL,
+    Anio INT NOT NULL,
     Semestre INT NOT NULL,
     Fch_Inicio DATE ,
     Fch_Fin DATE ,

@@ -38,11 +38,11 @@ function validar(){
         data.ci = ci.value
     }
     
-    if(esValido(nombre.value)){
+    if(esValidoConEspacios(nombre.value)){
         data.nombre = nombre.value
     }
 
-    if(esValido(apellido.value)){
+    if(esValidoConEspacios(apellido.value)){
         data.apellido = apellido.value
     }
 
@@ -50,7 +50,7 @@ function validar(){
         data.fecha_de_nacimiento = fecha_de_nacimiento.value
     }
 
-    if(esValido(domicilio.value)){
+    if(esValidoConEspacios(domicilio.value)){
         data.domicilio = domicilio.value
     }
 
@@ -70,4 +70,9 @@ function validar(){
 function esValido(str) {
     //removemos espacios a los extremos y chequeamos que no exista ninguno en el medio
     return str.trim().length > 0 && !str.includes(" ");
+}
+
+function esValidoConEspacios(str) {
+    // Solo aseguramos que la cadena no esté vacía después de quitar espacios al inicio y al final
+    return str.trim().length > 0;
 }

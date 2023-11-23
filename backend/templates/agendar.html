@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendar Carné de Salud</title>
+    <!-- Incluye aquí tus estilos y scripts necesarios -->
+</head>
+<body>
+    <h1>Agendar Carné de Salud</h1>
+    <form id="agenda-form">
+        <label for="ci">Cédula de Identidad:</label>
+        <input type="number" id="ci" name="ci" required>
+        
+        <label for="fecha_agenda">Fecha para agendarse:</label>
+        <input type="date" id="fecha_agenda" name="fecha_agenda" required>
+        
+        <button type="submit">Agendar</button>
+    </form>
+
+    <!-- Ruta actualizada para incluir el archivo JavaScript correcto -->
+    <script src="{{ url_for('static', filename='agenda/agendar.js') }}"></script>
+</body>
+</html>
+
