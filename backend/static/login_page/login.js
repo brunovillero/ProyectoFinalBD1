@@ -13,7 +13,7 @@ function ingresar(data){
         .then((response) => {
             //guardamos el hash creado para la session
             sessionStorage.setItem("auth", response.auth)
-            //redirigimos al dashboard
+            location.href = "/dashboard"
         })
 }
 

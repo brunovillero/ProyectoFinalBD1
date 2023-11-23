@@ -24,5 +24,11 @@ def register():
             return jsonify(register_user(request.json))
     return jsonify("Tipo de solicitud invalida")
 
+@app.route('/dashboard', methods = ['GET'])
+def dashboard():
+    if request.method == 'GET':
+        return render_template('./dashboard.html')
+    return jsonify("Tipo de solicitud invalida")
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
