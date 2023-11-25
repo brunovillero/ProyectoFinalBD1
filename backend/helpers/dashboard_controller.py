@@ -55,3 +55,6 @@ def get_dashboard_data(session_hash):
     }
 
     return response
+
+def upload_carne_salud(data):
+    return data

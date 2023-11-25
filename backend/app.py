@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from helpers.registration_controller import register_user
 from helpers.login_controller import login_func
-from helpers.dashboard_controller import get_dashboard_data
+from helpers.dashboard_controller import get_dashboard_data, upload_carne_salud
 
 app = Flask(__name__, template_folder='templates')
 
@@ -31,10 +31,23 @@ def dashboard():
         return render_template('./dashboard.html')
     return jsonify("Tipo de solicitud invalida")
 
-@app.route('/update-period', methods = ['POST'])
+@app.route('/get-dashboard-data', methods = ['POST'])
 def update_period():
     if request.method == 'POST':
         return jsonify(get_dashboard_data(request.json))
+    return jsonify("Tipo de solicitud invalida")
+
+@app.route('/upload-carne-salud', methods = ['POST'])
+def upload_carne():
+    if request.method == 'POST':
+        try:
+            file = request.files['archivo_carne']
+            date = request.form['fecha_de_vencimiento']
+            return jsonify({'mensaje': 'Archivo subido exitosamente', 'fecha_de_vencimiento': date})
+
+        except Exception as e:
+            # Handle errors
+            return jsonify({'error': str(e)}), 500
     return jsonify("Tipo de solicitud invalida")
 
 if __name__ == '__main__':

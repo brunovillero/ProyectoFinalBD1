@@ -33,17 +33,25 @@
         <div class="contenedor-carne-al-dia" id="contenedor-carne-al-dia" hidden>
             <fieldset>
                 <legend>¿Tiene Carné de salud al día?</legend>
-                    <input type="radio" id="carne-al-dia-si" name="carne-al-dia" value="si" checked onclick="carneaAlDiaSi()"/>
+                    <input type="radio" id="carne-al-dia-si" name="carne-al-dia" value="si" onclick="carnea_al_dia_si()"/>
                     <label for="carne-al-dia-si">Si</label>
                 
-                    <input type="radio" id="carne-al-dia-no" name="carne-al-dia" value="no" checked onclick="carneaAlDiaNo()"/>
+                    <input type="radio" id="carne-al-dia-no" name="carne-al-dia" value="no" onclick="carnea_al_dia_no()"/>
                     <label for="carne-al-dia-no">No</label>
             </fieldset>
         </div>
         <div class="contenedor-subir-carne" id="contenedor-subir-carne" hidden>
-            <label for="carnet">Carné de salud</label>
-            <input type="file" id="carnet" name="carnet">
-            <input type="button" id="ingresar" value="ingresar" onclick="validar()"/>
+            Sube tu comprobante:
+            <label for="carnet-archivo">Archivo (jpg/pdf)</label>
+            <input type="file" id="carnet-archivo" name="carnet-archivo" accept=".jpg,.pdf">
+            
+            <label for="fecha_de_emision">Fecha de emision</label>
+            <input type="date" id="fecha_de_emision" name="fecha_de_emision">
+            
+            <label for="fecha_de_vencimiento">Fecha de vencimiento</label>
+            <input type="date" id="fecha_de_vencimiento" name="fecha_de_vencimiento">
+            
+            <input type="button" id="ingresar" value="ingresar" onclick="registrar_carne_salud()"/>
         </div>
         <div class="contenedor-agendar" id="contenedor-agendar" hidden>
             Agendar

@@ -3,7 +3,7 @@ alert(sessionStorage.getItem('auth'))
 window.onload = periodo_de_actualizacion()
 
 function periodo_de_actualizacion(){
-    let url = "http://localhost:5000/update-period";
+    url = "http://localhost:5000/get-dashboard-data"
 
     fetch(url, {
         method: "POST", 
@@ -50,7 +50,7 @@ function procesar_datos(response){
     }
 }
 
-function carneaAlDiaSi(){
+function carnea_al_dia_si(){
     contenedor_subir_carne = document.getElementById("contenedor-subir-carne")
     contenedor_subir_carne.removeAttribute("hidden")
 
@@ -58,10 +58,32 @@ function carneaAlDiaSi(){
     contenedor_agendar.setAttribute("hidden", true)
 }
 
-function carneaAlDiaNo(){
+function carnea_al_dia_no(){
     contenedor_agendar = document.getElementById("contenedor-agendar")
     contenedor_agendar.removeAttribute("hidden")
 
     contenedor_subir_carne = document.getElementById("contenedor-subir-carne")
     contenedor_subir_carne.setAttribute("hidden", true)
+}
+
+function registrar_carne_salud(){
+    data = new FormData();
+
+    fecha_de_emision = document.getElementById("fecha_de_emision")
+    fecha_de_vencimiento = document.getElementById("fecha_de_vencimiento")
+    archivo_carne = document.getElementById("carnet-archivo").files[0]
+    
+    data.append('archivo_carne', archivo_carne)
+    data.append('fecha_de_vencimiento', fecha_de_vencimiento.value) 
+    data.append('fecha_de_emision', fecha_de_emision.value) 
+
+    url = "http://localhost:5000/upload-carne-salud"
+
+    fetch(url, {
+        method: "POST", 
+        body: data, 
+    })
+    .then((res) => res.json())
+    .catch((error) => console.error("Error:", error))
+    .then((response) => procesar_datos(response))
 }
