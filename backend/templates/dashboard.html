@@ -8,41 +8,46 @@
 </head>
 <body>
     <div class="container">
-        <div class="errores" hidden>
+        <div class="mensaje" id="mensaje" hidden>
         </div>
-        <div class="datos-funcionario" hidden>
+        <div class="historial-agenda">
+            Historial Agenda
+            <div class="datos-agenda" id="datos-agenda" hidden></div>
+        </div>
+        <div class="historial-carne">
+            <div class="datos-carne" id="datos-carne" hidden></div>
+        </div>
+        <div class="datos-funcionario" id="datos-funcionario" hidden>
             <label for="ci">Cedula</label>
-            <input type="number" id="ci" name="ci">
+            <input type="number" id="ci" name="ci" disabled>
 
             <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre">
+            <input type="text" id="nombre" name="nombre" disabled>
 
             <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" name="apellido">
+            <input type="text" id="apellido" name="apellido" disabled>
 
             <label for="fecha_de_nacimiento">Fecha de nacimiento</label>
-            <input type="date" id="fecha_de_nacimiento" name="fecha_de_nacimiento">
+            <input type="date" id="fecha_de_nacimiento" name="fecha_de_nacimiento" disabled>
         </div>
-        <form class="actualizar-carne" hidden>
+        <div class="contenedor-carne-al-dia" id="contenedor-carne-al-dia" hidden>
             <fieldset>
                 <legend>¿Tiene Carné de salud al día?</legend>
-                
-                <div>
-                    <input type="radio" id="carne-al-dia-si" name="carne-al-dia" value="si" checked />
+                    <input type="radio" id="carne-al-dia-si" name="carne-al-dia" value="si" checked onclick="carneaAlDiaSi()"/>
                     <label for="carne-al-dia-si">Si</label>
-                </div>
                 
-                <div>
-                    <input type="radio" id="carne-al-dia-no" name="carne-al-dia" value="no" checked />
+                    <input type="radio" id="carne-al-dia-no" name="carne-al-dia" value="no" checked onclick="carneaAlDiaNo()"/>
                     <label for="carne-al-dia-no">No</label>
-                </div>    
             </fieldset>
-
+        </div>
+        <div class="contenedor-subir-carne" id="contenedor-subir-carne" hidden>
             <label for="carnet">Carné de salud</label>
             <input type="file" id="carnet" name="carnet">
-
             <input type="button" id="ingresar" value="ingresar" onclick="validar()"/>
-        </form>
+        </div>
+        <div class="contenedor-agendar" id="contenedor-agendar" hidden>
+            Agendar
+        </div>
     </div>
 </body>
 </html>

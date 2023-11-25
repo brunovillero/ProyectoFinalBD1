@@ -8,7 +8,7 @@ def get_dashboard_data(session_hash):
     logid = redis_service.get(session_hash)
     
     if not logid:
-        return {"message": "Usuario no autorizado"}
+        return {"mensaje": "Usuario no autorizado"}
     
     today_date = date.today()
     sql_data = { "today": today_date.strftime('%Y-%m-%d'), "logid": logid }
@@ -24,7 +24,7 @@ def get_dashboard_data(session_hash):
     period = mysql_cursor.fetchone()
     
     if not period:
-        return {"message": "Periodo finalizado"}
+        return {"mensaje": "Periodo finalizado"}
     
     select_func = ("SELECT Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email FROM Funcionarios "
         "WHERE LogId = %(logid)s")
