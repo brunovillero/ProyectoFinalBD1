@@ -8,7 +8,7 @@ def get_update_period(session_hash):
     logid = redis_service.get(session_hash)
     
     if not logid:
-        return "Usuario no authorizado"
+        return "Usuario no autorizado"
     
     today_date = date.today()
     sql_data = { "today": today_date.strftime('%Y-%m-%d') }
@@ -23,6 +23,9 @@ def get_update_period(session_hash):
     myresult = mysql_cursor.fetchone()
     mysql_cursor.close()
     mysql.close()
-    
-    return myresult
+
+    if not myresult:
+        return "Periodo finalizado"
+
+    return { "fecha_inicio": myresult[0].strftime('%Y-%m-%d'), "fecha_final": myresult[1].strftime('%Y-%m-%d') }
     
