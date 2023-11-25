@@ -36,6 +36,8 @@ def login(data):
         redis_service = redis_connection()
         redis_service.set(session_hash, data["logid"])
         
+        mysql_cursor.close()
+        mysql.close()
         return {"auth": session_hash}
     else:
         mysql_cursor.close()

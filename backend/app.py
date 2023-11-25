@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from helpers.registration_controller import register_user
 from helpers.login_controller import login_func
+from helpers.dashboard_controller import get_update_period
 
 app = Flask(__name__, template_folder='templates')
 
@@ -28,6 +29,12 @@ def register():
 def dashboard():
     if request.method == 'GET':
         return render_template('./dashboard.html')
+    return jsonify("Tipo de solicitud invalida")
+
+@app.route('/update-period', methods = ['POST'])
+def update_period():
+    if request.method == 'POST':
+        return jsonify(get_update_period(request.json))
     return jsonify("Tipo de solicitud invalida")
 
 if __name__ == '__main__':
