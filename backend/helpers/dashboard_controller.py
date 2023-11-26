@@ -47,14 +47,14 @@ def get_dashboard_data(session_hash):
     mysql_cursor.close()
     mysql.close()
 
-    response = {
+    respuesta = {
         "periodo": period,
         "funcionario": func,
         "agenda": agenda,
         "carne": carne
     }
 
-    return response
+    return respuesta
 
 def upload_carne_salud(request):
 
@@ -98,3 +98,25 @@ def upload_carne_salud(request):
         mysql_cursor.close()
         mysql.close()
         raise Exception("No se pudo actualizar el carné, error: " + str(error))
+    
+def create_agenda(data):
+    redis_service = redis_connection()
+    logid = redis_service.get(data["auth"])
+    
+    if not logid:
+        return {"mensaje": "Usuario no autorizado"}
+    
+    mysql = mysql_connection()
+    mysql_cursor = mysql.cursor(dictionary=True)
+    select_func = ("SELECT Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email FROM Funcionarios "
+        "WHERE LogId = %(logid)s")
+    
+    mysql_cursor.execute(select_func, {"logid": logid})
+    func = mysql_cursor.fetchone()
+    
+    insert_agenda = ("INSERT INTO Agenda (Ci, Fch_Agenda) VALUES (%(ci)s, %(fecha_agenda)s)")
+    mysql_cursor.execute(insert_agenda, {"ci": func["Ci"], "fecha_agenda": data["fecha_agenda"]})
+    mysql.commit()
+    mysql_cursor.close()
+    mysql.close()
+    return data

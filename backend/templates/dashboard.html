@@ -54,8 +54,14 @@
             
             <input type="button" id="ingresar" value="ingresar" onclick="registrar_carne_salud()"/>
         </div>
-        <div class="contenedor-agendar" id="contenedor-agendar" hidden>
-            Agendar
+        <div class="contenedor-agendar" id="contenedor-agendar">
+            <label for="fecha-agenda">Selecciona una fecha para agendarte:</label>
+            <input
+                type="datetime-local"
+                id="fecha-agenda"
+                name="fecha-agenda"
+            />
+            <input type="button" id="ingresar" value="ingresar" onclick="registrar_agenda()"/>
         </div>
     </div>
 </body>

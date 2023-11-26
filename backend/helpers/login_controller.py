@@ -25,10 +25,9 @@ def login(data):
     mysql = mysql_connection()
     mysql_cursor = mysql.cursor()
     mysql_cursor.execute(select_login, data)
-    myresult = mysql_cursor.fetchone()
+    login = mysql_cursor.fetchone()
     
-    
-    if(ph.verify(myresult[1], data["password"])):
+    if login and ph.verify(login[1], data["password"]):
         
         #Creamos un nuevo hash en cache para la session
         #El cual se va a utilizar en el front para validar las solicitudes en el backend

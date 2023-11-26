@@ -1,6 +1,6 @@
-window.onload = periodo_de_actualizacion()
+window.onload = datos_del_funcionario()
 
-function periodo_de_actualizacion(){
+function datos_del_funcionario(){
     url = "http://localhost:5000/get-dashboard-data"
 
     fetch(url, {
@@ -53,6 +53,20 @@ function procesar_datos(response){
         div_contenedor_carne_al_dia = document.getElementById("contenedor-carne-al-dia")
         div_contenedor_carne_al_dia.removeAttribute("hidden")
     }
+    if(response.hasOwnProperty("periodo") && response.periodo != null){
+        
+        fecha_agenda = document.getElementById("fecha-agenda")
+        today = new Date()
+        today = today.toISOString()
+        today = today.substring(0, today.indexOf("."))
+        fecha_agenda.setAttribute("min", today)
+
+        fecha_fin = new Date(response.periodo.Fch_Fin)
+        fecha_fin = fecha_fin.toISOString()
+        fecha_fin = fecha_fin.substring(0, fecha_fin.indexOf("."))
+
+        fecha_agenda.setAttribute("max", fecha_fin)   
+    }
 }
 
 function carnea_al_dia_si(){
@@ -88,6 +102,29 @@ function registrar_carne_salud(){
     fetch(url, {
         method: "POST", 
         body: data, 
+    })
+    .then((res) => res.json())
+    .catch((error) => console.error("Error:", error))
+    .then((response) => procesar_datos(response))
+}
+
+
+function registrar_agenda(){
+    
+
+    data = {}
+    data.auth = sessionStorage.getItem('auth')
+    data.fecha_agenda = document.getElementById("fecha-agenda").value
+
+
+    url = "http://localhost:5000/create-agenda"
+
+    fetch(url, {
+        method: "POST", 
+        body: JSON.stringify(data), 
+        headers: {
+            "Content-Type": "application/json",
+    },
     })
     .then((res) => res.json())
     .catch((error) => console.error("Error:", error))

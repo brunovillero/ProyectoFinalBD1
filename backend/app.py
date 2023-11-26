@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from helpers.registration_controller import register_user
 from helpers.login_controller import login_func
-from helpers.dashboard_controller import get_dashboard_data, upload_carne_salud
+from helpers.dashboard_controller import get_dashboard_data, upload_carne_salud, create_agenda
 
 app = Flask(__name__, template_folder='templates')
 
@@ -45,6 +45,12 @@ def upload_carne():
         except Exception as e:
             # Handle errors
             return jsonify({'error': str(e)}), 500
+    return jsonify("Tipo de solicitud invalida")
+
+@app.route('/create-agenda', methods = ['POST'])
+def agenda():
+    if request.method == 'POST':
+        return jsonify(create_agenda(request.json))
     return jsonify("Tipo de solicitud invalida")
 
 if __name__ == '__main__':
