@@ -1,5 +1,3 @@
-alert(sessionStorage.getItem('auth'))
-
 window.onload = periodo_de_actualizacion()
 
 function periodo_de_actualizacion(){
@@ -27,6 +25,13 @@ function procesar_datos(response){
         agenda_div = document.getElementById("datos-agenda")
         agenda_div.innerHTML = "Ultima fecha agendada: " + response.agenda.Fch_Agenda
         agenda_div.removeAttribute("hidden")
+    }
+    if(response.hasOwnProperty("carne") && response.carne != null) {
+        carne_div = document.getElementById("datos-carne")
+        carne_div.innerHTML = "Ultimo carné registrado: Fecha de emisión: " 
+            + response.carne.Fch_Emision + 
+            ", Fecha de vencimiento: " + response.carne.Fch_Vencimiento
+        carne_div.removeAttribute("hidden")
     }
     if(response.hasOwnProperty("funcionario") && response.funcionario != null) {
         ci = document.getElementById("ci")

@@ -41,8 +41,7 @@ def update_period():
 def upload_carne():
     if request.method == 'POST':
         try:
-            return jsonify(upload_carne_salud(request))
-
+            return jsonify({"exito": upload_carne_salud(request)})
         except Exception as e:
             # Handle errors
             return jsonify({'error': str(e)}), 500

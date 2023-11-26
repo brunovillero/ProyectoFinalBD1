@@ -79,7 +79,7 @@ def upload_carne_salud(request):
     func = mysql_cursor.fetchone()
 
     insert_carne_salud = ("INSERT INTO Carnet_Salud "
-        "VALUES (%(ci)s, %(fecha_de_emision)s, %(fecha_de_emision)s, %(comprobante)s)")
+        "VALUES (%(ci)s, %(fecha_de_emision)s, %(fecha_de_vencimiento)s, %(comprobante)s)")
     
     try:
         mysql_cursor.execute(insert_carne_salud, 
@@ -97,4 +97,4 @@ def upload_carne_salud(request):
     except Exception as error:
         mysql_cursor.close()
         mysql.close()
-        raise Exception("No se pudo actualizar el carne, error: " + str(error))
+        raise Exception("No se pudo actualizar el carné, error: " + str(error))
