@@ -58,5 +58,7 @@ def insert_func(data):
         mysql.commit()
         mysql_cursor.close()
         mysql.close()
-    except Exception as error:
+    except Exception:
+        mysql_cursor.close()
+        mysql.close()
         raise Exception("No se pudo registrar usuario, puede que la cedula o el usuario ya esten registrados.")

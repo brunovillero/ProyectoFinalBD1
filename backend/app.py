@@ -41,9 +41,7 @@ def update_period():
 def upload_carne():
     if request.method == 'POST':
         try:
-            file = request.files['archivo_carne']
-            date = request.form['fecha_de_vencimiento']
-            return jsonify({'mensaje': 'Archivo subido exitosamente', 'fecha_de_vencimiento': date})
+            return jsonify(upload_carne_salud(request))
 
         except Exception as e:
             # Handle errors

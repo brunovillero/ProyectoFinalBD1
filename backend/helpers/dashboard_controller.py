@@ -56,5 +56,45 @@ def get_dashboard_data(session_hash):
 
     return response
 
-def upload_carne_salud(data):
-    return data
+def upload_carne_salud(request):
+
+    archivo_carne = request.files['archivo_carne'].read()
+    fecha_de_emision = request.form['fecha_de_emision']
+    fecha_de_vencimiento = request.form['fecha_de_vencimiento']
+    session_hash = request.form['auth']
+
+    redis_service = redis_connection()
+    logid = redis_service.get(session_hash)
+    
+    if not logid:
+        return {"mensaje": "Usuario no autorizado"}
+    
+    mysql = mysql_connection()
+    
+    mysql_cursor = mysql.cursor(dictionary=True)
+    select_func = ("SELECT Ci FROM Funcionarios "
+        "WHERE LogId = %(logid)s")
+    
+    mysql_cursor.execute(select_func, {"logid": logid})
+    func = mysql_cursor.fetchone()
+
+    insert_carne_salud = ("INSERT INTO Carnet_Salud "
+        "VALUES (%(ci)s, %(fecha_de_emision)s, %(fecha_de_emision)s, %(comprobante)s)")
+    
+    try:
+        mysql_cursor.execute(insert_carne_salud, 
+            {
+                "ci": func["Ci"], 
+                "fecha_de_emision": fecha_de_emision,
+                "fecha_de_vencimiento": fecha_de_vencimiento,
+                "comprobante": archivo_carne
+            }
+        )
+        mysql.commit()
+        mysql_cursor.close()
+        mysql.close()
+        return "Carné de salud actualizado correctamente"
+    except Exception as error:
+        mysql_cursor.close()
+        mysql.close()
+        raise Exception("No se pudo actualizar el carne, error: " + str(error))

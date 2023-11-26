@@ -75,7 +75,8 @@ function registrar_carne_salud(){
     
     data.append('archivo_carne', archivo_carne)
     data.append('fecha_de_vencimiento', fecha_de_vencimiento.value) 
-    data.append('fecha_de_emision', fecha_de_emision.value) 
+    data.append('fecha_de_emision', fecha_de_emision.value)
+    data.append('auth', sessionStorage.getItem('auth'))
 
     url = "http://localhost:5000/upload-carne-salud"
 
