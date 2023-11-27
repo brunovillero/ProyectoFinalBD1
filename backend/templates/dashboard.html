@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
     <script src="{{url_for('static', filename='dashboard_page/dashboard.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='dashboard_page/dashboard.css')}}">
+
 </head>
 <body>
     <div class="container">
         <div class="historial-agenda" id="historial-agenda" hidden>
-            Historial de ultima fecha agendada
+            <h3>Historial de ultima fecha agendada:</h3>
             <div class="datos-agenda" id="datos-agenda"></div>
         </div>
         <div class="historial-carne" id="historial-carne" hidden>
-            Historial de ultimo carné salud vigente
+            <h3>Historial de ultimo carné salud vigente:</h3>
             <div class="datos-carne" id="datos-carne"></div>
         </div>
         <div class="datos-funcionario" id="datos-funcionario" hidden>
@@ -31,7 +33,7 @@
         </div>
         <div class="contenedor-carne-al-dia" id="contenedor-carne-al-dia" hidden>
             <fieldset>
-                <legend>¿Tiene Carné de salud al día?</legend>
+                <legend>¿Carné de salud al día?</legend>
                     <input type="radio" id="carne-al-dia-si" name="carne-al-dia" value="si" onclick="carnea_al_dia_si()"/>
                     <label for="carne-al-dia-si">Si</label>
                 
@@ -50,7 +52,7 @@
             <label for="fecha_de_vencimiento">Fecha de vencimiento</label>
             <input type="date" id="fecha_de_vencimiento" name="fecha_de_vencimiento">
             
-            <input type="button" id="ingresar" value="ingresar" onclick="registrar_carne_salud()"/>
+            <input type="button" id="ingresar" value="Confirmar" onclick="registrar_carne_salud()"/>
         </div>
         <div class="contenedor-agendar" id="contenedor-agendar" hidden>
             <label for="fecha-agenda">Selecciona una fecha para agendarte:</label>
@@ -59,7 +61,7 @@
                 id="fecha-agenda"
                 name="fecha-agenda"
             />
-            <input type="button" id="ingresar" value="ingresar" onclick="registrar_agenda()"/>
+            <input type="button" id="ingresar" value="Confirmar" onclick="registrar_agenda()"/>
         </div>
         <div class="respuesta-servidor" id="respuesta-servidor"></div>
     </div>

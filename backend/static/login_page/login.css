@@ -2,7 +2,7 @@
     width: 100%;
     font-family: 'Montserrat', sans-serif;
     position: relative;
-    height: 260px;
+    height: 300px;
     width: 405px;
     margin: auto;
     padding: 60px 60px;
@@ -10,8 +10,8 @@
     font-size: 14px;
 }
 
-input {
-    display: inline-block;
+.container div {
+    margin-bottom: 14px;
 }
 
 input {
@@ -21,7 +21,7 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
+}
   
 input[type=button] {
     width: 100%;
