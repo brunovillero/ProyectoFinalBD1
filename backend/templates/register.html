@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register</title>
     <script src="{{url_for('static', filename='registration_page/register.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='registration_page/register.css')}}">
 </head>
 <body>
     <div class="container">
@@ -37,7 +38,7 @@
             <label for="telefono">Teléfono de contacto</label>
             <input type="tel" id="telefono" name="telefono">
 
-            <input type="button" id="ingresar" value="ingresar" onclick="validar()"/>
+            <input type="button" id="ingresar" value="Confirmar" onclick="validar()"/>
         </form>
         <div class="login-section">
             En caso ya estar registrado clickea <a href="/">este link</a> para poder ingresar al sistema.
