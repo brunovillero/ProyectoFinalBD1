@@ -19,7 +19,7 @@ CREATE TABLE Agenda (
     Nro INT AUTO_INCREMENT PRIMARY KEY,
     Ci INT NOT NULL,
     Fch_Agenda DATETIME NOT NULL,
-    FOREIGN KEY (Ci) REFERENCES Funcionarios(Ci)
+    FOREIGN KEY (Ci) REFERENCES Funcionarios(Ci),
     CONSTRAINT UCAgenda UNIQUE(Ci, Fch_Agenda)
 );
 

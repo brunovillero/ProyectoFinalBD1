@@ -7,7 +7,7 @@ def register_user(data):
         insert_func(data)
         return "Funcionario registrado correctamente"
     except Exception as error:
-        return str(error)
+        return "No se pudo registrar usuario: error " + str(error)
 
 def validate(data):
 
@@ -49,16 +49,11 @@ def insert_func(data):
     insert_func = ("INSERT INTO Funcionarios "
               "(Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email, LogId) "
               "VALUES (%(ci)s, %(nombre)s, %(apellido)s, %(fecha_de_nacimiento)s, %(domicilio)s, %(telefono)s, %(email)s, %(logid)s)")
-
-    try:
-        mysql = mysql_connection()
-        mysql_cursor = mysql.cursor()
-        mysql_cursor.execute(insert_login, data)
-        mysql_cursor.execute(insert_func, data)
-        mysql.commit()
-        mysql_cursor.close()
-        mysql.close()
-    except Exception:
-        mysql_cursor.close()
-        mysql.close()
-        raise Exception("No se pudo registrar usuario, puede que la cedula o el usuario ya esten registrados.")
+    
+    mysql = mysql_connection()
+    mysql_cursor = mysql.cursor()
+    mysql_cursor.execute(insert_login, data)
+    mysql_cursor.execute(insert_func, data)
+    mysql.commit()
+    mysql_cursor.close()
+    mysql.close()

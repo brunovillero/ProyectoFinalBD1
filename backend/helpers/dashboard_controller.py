@@ -24,7 +24,7 @@ def get_dashboard_data(session_hash):
     period = mysql_cursor.fetchone()
     
     if not period:
-        return {"mensaje": "Periodo finalizado"}
+        return {"mensaje": "Periodo de actualizacion finalizado"}
     
     select_func = ("SELECT Ci, Nombre, Apellido, Fch_Nacimiento, Direccion, Telefono, Email FROM Funcionarios "
         "WHERE LogId = %(logid)s")
@@ -67,7 +67,7 @@ def upload_carne_salud(request):
     logid = redis_service.get(session_hash)
     
     if not logid:
-        return {"mensaje": "Usuario no autorizado"}
+        return "Usuario no autorizado"
     
     mysql = mysql_connection()
     
@@ -81,30 +81,25 @@ def upload_carne_salud(request):
     insert_carne_salud = ("INSERT INTO Carnet_Salud "
         "VALUES (%(ci)s, %(fecha_de_emision)s, %(fecha_de_vencimiento)s, %(comprobante)s)")
     
-    try:
-        mysql_cursor.execute(insert_carne_salud, 
-            {
-                "ci": func["Ci"], 
-                "fecha_de_emision": fecha_de_emision,
-                "fecha_de_vencimiento": fecha_de_vencimiento,
-                "comprobante": archivo_carne
-            }
-        )
-        mysql.commit()
-        mysql_cursor.close()
-        mysql.close()
-        return "Carné de salud actualizado correctamente"
-    except Exception as error:
-        mysql_cursor.close()
-        mysql.close()
-        raise Exception("No se pudo actualizar el carné, error: " + str(error))
+    mysql_cursor.execute(insert_carne_salud, 
+        {
+            "ci": func["Ci"], 
+            "fecha_de_emision": fecha_de_emision,
+            "fecha_de_vencimiento": fecha_de_vencimiento,
+            "comprobante": archivo_carne
+        }
+    )
+    mysql.commit()
+    mysql_cursor.close()
+    mysql.close()
+    return "Carné de salud actualizado correctamente"
     
 def create_agenda(data):
     redis_service = redis_connection()
     logid = redis_service.get(data["auth"])
     
     if not logid:
-        return {"mensaje": "Usuario no autorizado"}
+        return "Usuario no autorizado"
     
     mysql = mysql_connection()
     mysql_cursor = mysql.cursor(dictionary=True)
@@ -119,4 +114,4 @@ def create_agenda(data):
     mysql.commit()
     mysql_cursor.close()
     mysql.close()
-    return data
+    return "Agenda creada correctamente"

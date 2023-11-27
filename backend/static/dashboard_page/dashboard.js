@@ -12,26 +12,31 @@ function datos_del_funcionario(){
     })
     .then((res) => res.json())
     .catch((error) => console.error("Error:", error))
-    .then((response) => procesar_datos(response))
+    .then((response) => {
+        if(response.hasOwnProperty("mensaje")){
+            desplegar_mensaje(response.mensaje)
+        }else{
+            procesar_datos(response)
+        }
+    })
 }
 
 function procesar_datos(response){
-    if (response.hasOwnProperty("mensaje")) {
-        mensajes_div = document.getElementById("mensaje")
-        mensajes_div.innerHTML = response.mensaje
-        mensajes_div.removeAttribute("hidden")
-    }
     if(response.hasOwnProperty("agenda") && response.agenda != null) {
         agenda_div = document.getElementById("datos-agenda")
         agenda_div.innerHTML = "Ultima fecha agendada: " + response.agenda.Fch_Agenda
-        agenda_div.removeAttribute("hidden")
+        
+        historial_agenda_div = document.getElementById("historial-agenda")
+        historial_agenda_div.removeAttribute("hidden")
     }
     if(response.hasOwnProperty("carne") && response.carne != null) {
         carne_div = document.getElementById("datos-carne")
-        carne_div.innerHTML = "Ultimo carné registrado: Fecha de emisión: " 
+        carne_div.innerHTML = "Fecha de emisión: " 
             + response.carne.Fch_Emision + 
             ", Fecha de vencimiento: " + response.carne.Fch_Vencimiento
-        carne_div.removeAttribute("hidden")
+        
+        historial_carne_div = document.getElementById("historial-carne")
+        historial_carne_div.removeAttribute("hidden")
     }
     if(response.hasOwnProperty("funcionario") && response.funcionario != null) {
         ci = document.getElementById("ci")
@@ -105,17 +110,18 @@ function registrar_carne_salud(){
     })
     .then((res) => res.json())
     .catch((error) => console.error("Error:", error))
-    .then((response) => procesar_datos(response))
+    .then((response) => {
+        if(response.hasOwnProperty("mensaje")){
+            desplegar_mensaje(response.mensaje)
+        }
+    })
 }
 
 
 function registrar_agenda(){
-    
-
     data = {}
     data.auth = sessionStorage.getItem('auth')
     data.fecha_agenda = document.getElementById("fecha-agenda").value
-
 
     url = "http://localhost:5000/create-agenda"
 
@@ -128,5 +134,13 @@ function registrar_agenda(){
     })
     .then((res) => res.json())
     .catch((error) => console.error("Error:", error))
-    .then((response) => procesar_datos(response))
+    .then((response) => {
+        if(response.hasOwnProperty("mensaje")){
+            desplegar_mensaje(response.mensaje)
+        }
+    })
+}
+
+function desplegar_mensaje(mensaje){
+    document.getElementById("respuesta-servidor").innerHTML = mensaje 
 }

@@ -41,16 +41,19 @@ def update_period():
 def upload_carne():
     if request.method == 'POST':
         try:
-            return jsonify({"exito": upload_carne_salud(request)})
+            return jsonify({"mensaje": upload_carne_salud(request)})
         except Exception as e:
             # Handle errors
-            return jsonify({'error': str(e)}), 500
+            return jsonify({ "mensaje": "No se pudo actualizar el carne del usuario, error: " + str(e) })
     return jsonify("Tipo de solicitud invalida")
 
 @app.route('/create-agenda', methods = ['POST'])
 def agenda():
     if request.method == 'POST':
-        return jsonify(create_agenda(request.json))
+        try:
+            return jsonify({"mensaje": create_agenda(request.json)})
+        except Exception as e:
+            return jsonify({ "mensaje": "No se pudo agendar al usuario, error: " + str(e) })
     return jsonify("Tipo de solicitud invalida")
 
 if __name__ == '__main__':
