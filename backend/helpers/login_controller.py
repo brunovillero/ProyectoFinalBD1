@@ -7,13 +7,13 @@ def login_func(data):
         validate(data)
         return login(data)
     except Exception as error:
-        return str(error)
+        return {"mensaje": str(error)}
 
 def validate(data):
-    if not(data["logid"]) or data["logid"] == "":
+    if not("logid" in data) or data["logid"] == "":
        raise Exception("Usuario requerido")
 
-    if not(data["password"]) or data["password"] == "":
+    if not("password" in data) or data["password"] == "":
        raise Exception("Password requerido")
     
 def login(data):
@@ -23,22 +23,21 @@ def login(data):
         "WHERE LogId = %(logid)s")
     
     mysql = mysql_connection()
-    mysql_cursor = mysql.cursor()
+    mysql_cursor = mysql.cursor(dictionary=True)
     mysql_cursor.execute(select_login, data)
     login = mysql_cursor.fetchone()
+    mysql_cursor.close()
+    mysql.close()
     
-    if login and ph.verify(login[1], data["password"]):
-        
-        #Creamos un nuevo hash en cache para la session
-        #El cual se va a utilizar en el front para validar las solicitudes en el backend
-        session_hash = ph.hash(data["password"])
-        redis_service = redis_connection()
-        redis_service.set(session_hash, data["logid"])
-        
-        mysql_cursor.close()
-        mysql.close()
-        return {"auth": session_hash}
-    else:
-        mysql_cursor.close()
-        mysql.close()
-        raise Exception("Credenciales invalidas, intente nuevamente")
+    try:
+        if login and ph.verify(login["Password"], data["password"]):
+            
+            #Creamos un nuevo hash en cache para la session
+            #El cual se va a utilizar en el front para validar las solicitudes en el backend
+            session_hash = ph.hash(data["password"])
+            redis_service = redis_connection()
+            redis_service.set(session_hash, data["logid"])
+            
+            return {"auth": session_hash}
+    except Exception: 
+        raise Exception("Credenciales invalidas")
