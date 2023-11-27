@@ -40,6 +40,6 @@ function validar(){
 }
 
 function esValido(str) {
-    //removemos espacios a los extremos y chequeamos que no exista ninguno en el medio
+    //removemos espacios a los extremos
     return str.trim().length > 0;
 }

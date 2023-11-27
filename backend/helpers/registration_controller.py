@@ -1,41 +1,40 @@
 from helpers.database import mysql_connection
+from helpers.database import redis_connection
 import argon2
 
 def register_user(data):
     try:
         validate(data)
-        insert_func(data)
-        return "Funcionario registrado correctamente"
+        return insert_func(data)
     except Exception as error:
-        return "No se pudo registrar usuario: error " + str(error)
+        return {"mensaje": "No se pudo registrar usuario: " + str(error)}
 
 def validate(data):
-
-    if not(data["logid"]) or data["logid"] == "":
+    if not("logid" in data) or data["logid"] == "":
        raise Exception("Usuario requerido")
 
-    if not(data["password"]) or data["password"] == "":
+    if not("password" in data) or data["password"] == "":
        raise Exception("Password requerido")
     
-    if not(data["ci"]) or data["ci"] == "":
+    if not("ci" in data) or data["ci"] == "":
         raise Exception("Cedula requerida")
 
-    if not(data["nombre"]) or data["nombre"] == "":
+    if not("nombre" in data) or data["nombre"] == "":
         raise Exception("Nombre requerido")
 
-    if not(data["apellido"]) or data["apellido"] == "":
+    if not("apellido" in data) or data["apellido"] == "":
         raise Exception("Apellido requerido")
 
-    if not(data["fecha_de_nacimiento"]) or data["fecha_de_nacimiento"] == "":
+    if not("fecha_de_nacimiento" in data) or data["fecha_de_nacimiento"] == "":
         raise Exception("Fecha de nacimiento requerido")
 
-    if not(data["domicilio"]) or data["domicilio"] == "":
+    if not("domicilio" in data) or data["domicilio"] == "":
         raise Exception("Domicilio requerido")
 
-    if not(data["email"]) or data["email"] == "":
+    if not("email" in data) or data["email"] == "":
         raise Exception("Email requerido")
 
-    if not(data["telefono"]) or data["telefono"] == "":
+    if not("telefono" in data) or data["telefono"] == "":
         raise Exception("Telefono requerido")
 
 def insert_func(data):
@@ -57,3 +56,10 @@ def insert_func(data):
     mysql.commit()
     mysql_cursor.close()
     mysql.close()
+
+    #Hash nuevo para la session
+    session_hash = ph.hash(data["password"])
+    redis_service = redis_connection()
+    redis_service.set(session_hash, data["logid"])
+    
+    return {"auth": session_hash}

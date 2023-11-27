@@ -10,7 +10,16 @@ function ingresar(data){
     })
         .then((res) => res.json())
         .catch((error) => console.error("Error:", error))
-        .then((response) => console.log("Success:", response))
+        .then((response) => {
+            
+            if(response.hasOwnProperty("auth")){
+                sessionStorage.setItem("auth", response.auth)
+                location.href = "/dashboard"
+            }
+            if(response.hasOwnProperty("mensaje")){
+                document.getElementById("respuesta-servidor").innerHTML = response.mensaje 
+            }
+        })
 }
 
 function validar(){
@@ -62,12 +71,10 @@ function validar(){
         data.telefono = telefono.value
     }
 
-    console.log(data)
-
     ingresar(data)
 }
 
 function esValido(str) {
-    //removemos espacios a los extremos y chequeamos que no exista ninguno en el medio
-    return str.trim().length > 0 && !str.includes(" ");
+    //removemos espacios a los extremos
+    return str.trim().length > 0;
 }
