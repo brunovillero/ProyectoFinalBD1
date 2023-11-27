@@ -33,7 +33,7 @@ function procesar_datos(response){
         carne_div = document.getElementById("datos-carne")
         carne_div.innerHTML = "Fecha de emisión: " 
             + response.carne.Fch_Emision + 
-            ", Fecha de vencimiento: " + response.carne.Fch_Vencimiento
+            "</br>Fecha de vencimiento: " + response.carne.Fch_Vencimiento
         
         historial_carne_div = document.getElementById("historial-carne")
         historial_carne_div.removeAttribute("hidden")
