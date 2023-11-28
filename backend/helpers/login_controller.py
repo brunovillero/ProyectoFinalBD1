@@ -28,7 +28,7 @@ def login(data):
     login = mysql_cursor.fetchone()
     mysql_cursor.close()
     mysql.close()
-    
+
     try:
         if login and ph.verify(login["Password"], data["password"]):
             
@@ -39,5 +39,7 @@ def login(data):
             redis_service.set(session_hash, data["logid"])
             
             return {"auth": session_hash}
+        else:
+            raise Exception("Credenciales invalidas")
     except Exception: 
         raise Exception("Credenciales invalidas")

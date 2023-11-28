@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from helpers.registration_controller import register_user
 from helpers.login_controller import login_func
 from helpers.dashboard_controller import get_dashboard_data, upload_carne_salud, create_agenda
+from helpers.listar_funcionarios import listar_funcionarios
 
 app = Flask(__name__, template_folder='templates')
 
+#Rutas
 @app.route('/', methods = ['POST', 'GET'])
 def login():
     if request.method == 'GET':
@@ -54,6 +56,16 @@ def agenda():
             return jsonify({"mensaje": create_agenda(request.json)})
         except Exception as e:
             return jsonify({ "mensaje": "No se pudo agendar al usuario, error: " + str(e) })
+    return jsonify("Tipo de solicitud invalida")
+
+@app.route('/listado_funcionarios', methods = ['GET'])
+def listado_funcionarios():
+    if request.method == 'GET':
+        try:
+            listar_funcionarios()
+            return send_file('listado_funcionarios.csv', as_attachment=True)
+        except:
+            jsonify("Error al generar el listado")
     return jsonify("Tipo de solicitud invalida")
 
 if __name__ == '__main__':

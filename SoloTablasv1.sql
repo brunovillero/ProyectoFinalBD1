@@ -12,7 +12,8 @@ CREATE TABLE Funcionarios (
     Telefono VARCHAR(20) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     LogId VARCHAR(255) NOT NULL,
-    FOREIGN KEY (LogId) REFERENCES Logins(LogId)
+    FOREIGN KEY (LogId) REFERENCES Logins(LogId),
+    CONSTRAINT UCEmail UNIQUE(Email)
 );
 
 CREATE TABLE Agenda (
@@ -39,3 +40,5 @@ CREATE TABLE Periodos_Actualizacion (
     Fch_Fin DATE ,
     PRIMARY KEY (Fch_Inicio, Fch_Fin)
 );
+
+INSERT INTO Periodos_Actualizacion VALUES(2023, 2, '2023-07-07', '2023-12-12');
