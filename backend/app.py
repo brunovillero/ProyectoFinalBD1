@@ -45,7 +45,6 @@ def upload_carne():
         try:
             return jsonify({"mensaje": upload_carne_salud(request)})
         except Exception as e:
-            # Handle errors
             return jsonify({ "mensaje": "No se pudo actualizar el carne del usuario, error: " + str(e) })
     return jsonify("Tipo de solicitud invalida")
 
